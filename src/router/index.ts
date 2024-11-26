@@ -1,4 +1,5 @@
 import App from '@/App';
+import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 const router = createBrowserRouter([
     {
@@ -6,7 +7,8 @@ const router = createBrowserRouter([
         Component: App,
         children: [
             {
-                // path: '/',
+                path: '/*',
+                Component: lazy(() => import('@/view/Home'))
             }
         ]
     }
