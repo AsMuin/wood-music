@@ -9,9 +9,11 @@ function Navbar() {
                     <img className="w-8 cursor-pointer rounded-2xl bg-base p-2" src={assets.arrow_right} alt="" />
                 </div>
                 <div className="flex items-center gap-4">
-                    <p className="hidden cursor-pointer rounded-2xl bg-main px-4 py-1 text-[15px] text-invert md:block hover:bg-muted hover:text-muted duration-200">开通会员</p>
+                    <p className="hidden cursor-pointer rounded-2xl bg-main px-4 py-1 text-[15px] text-invert duration-200 hover:bg-muted hover:text-muted md:block">
+                        开通会员
+                    </p>
                     <p className="cursor-pointer rounded-2xl bg-base px-3 py-1 text-[15px]">安装应用程序</p>
-                    <p className="flex h-7 w-7 items-center justify-center rounded-full bg-highlight text-invert hover:scale-125 duration-500">A</p>
+                    <p className="flex h-7 w-7 items-center justify-center rounded-full bg-highlight text-invert duration-500 hover:scale-125">A</p>
                 </div>
             </div>
             <div className="mt-4 flex items-center gap-2">
