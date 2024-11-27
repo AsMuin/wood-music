@@ -1,7 +1,7 @@
 import { assets, songsData } from '../assets/assets';
 function Player() {
     return (
-        <div className="flex h-[10%] items-center justify-between bg-black px-4 text-white">
+        <div className="flex h-[10%] items-center justify-between bg-nav px-4 text-main ">
             <div className="hidden items-center gap-4 lg:flex">
                 <img className="w-12" src={songsData[0].image} alt="" />
                 <div>

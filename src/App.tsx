@@ -6,8 +6,8 @@ import { Outlet } from 'react-router-dom';
 import Navbar from './components/Navbar';
 function App() {
     return (
-        <div className="h-screen bg-black">
-            <div className="flex h-[90%]">
+        <div className="h-screen bg-back p-2">
+            <div className="flex h-[90%] pb-2">
                 <Sidebar></Sidebar>
                 <Suspense fallback={<div>Loading...</div>}>
                     <Display>
