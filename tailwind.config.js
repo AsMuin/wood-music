@@ -62,5 +62,17 @@ export default {
             }
         }
     },
-    plugins: [daisyui]
+    plugins: [
+        daisyui,
+        function ({ addUtilities }) {
+            addUtilities({
+                '.hide-scrollbar': {
+                    '::-webkit-scrollbar': {
+                        display: 'none'
+                    },
+                    'scrollbar-width': 'none'
+                }
+            });
+        }
+    ]
 };
