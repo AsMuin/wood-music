@@ -19,8 +19,8 @@ muted 「失效」按钮填充色，也是选中字体时的背景色
     :root {
         --color-highlight: 102, 126, 234; /* 柔和蓝紫 */
         --color-bg-back: 225, 225, 225; /* 微灰 */
-        --color-bg-base: 170, 170, 190; /* 温和浅灰 */
-        --color-bg-nav: 175, 190, 180; /* 更浅的灰紫 */
+        --color-bg-base: 120, 140, 170; /* 温和浅灰 */
+        --color-bg-nav: 145, 170, 160; /* 更浅的灰紫 */
         --color-text-main: 34, 34, 34; /* 深灰 */
         --color-text-muted: 120, 120, 130; /* 中性灰 */
         --color-text-invert: 255, 255, 255; /* 白色 */

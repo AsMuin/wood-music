@@ -1,12 +1,14 @@
 import { assets } from '@/assets/assets';
 import Button from './UI/Button';
+import { useNavigate } from 'react-router-dom';
 function Navbar() {
+    const navigate = useNavigate();
     return (
         <>
             <div className="flex w-full items-center justify-between font-semibold">
                 <div className="flex items-center gap-2">
-                    <img className="w-8 cursor-pointer rounded-2xl bg-base p-2" src={assets.arrow_left} alt="" />
-                    <img className="w-8 cursor-pointer rounded-2xl bg-base p-2" src={assets.arrow_right} alt="" />
+                    <img onClick={() => navigate(-1)} className="w-8 cursor-pointer rounded-2xl bg-base p-2" src={assets.arrow_left} alt="" />
+                    <img onClick={() => navigate(1)} className="w-8 cursor-pointer rounded-2xl bg-base p-2" src={assets.arrow_right} alt="" />
                 </div>
                 <div className="flex items-center gap-4">
                     <Button className="hidden rounded-2xl md:block">开通会员</Button>

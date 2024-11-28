@@ -7,8 +7,12 @@ const router = createBrowserRouter([
         Component: App,
         children: [
             {
-                path: '/*',
+                path: '',
                 Component: lazy(() => import('@/view/Home'))
+            },
+            {
+                path: 'album/:id',
+                Component: lazy(() => import('@/view/Album'))
             }
         ]
     }

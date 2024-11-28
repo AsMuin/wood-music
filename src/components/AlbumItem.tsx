@@ -1,7 +1,14 @@
+import { useNavigate } from 'react-router-dom';
+
 function AlbumItem({ image, name, desc, id }: { image: string; name: string; desc: string; id: number }) {
     // const imageRef = useImageLazyLoad();
+    const navigate = useNavigate();
     return (
-        <div className="min-w-[180px] cursor-pointer rounded p-2 px-3 hover:bg-[#ffffff26]">
+        <div
+            onClick={() => {
+                navigate(`album/${id}`);
+            }}
+            className="min-w-[180px] cursor-pointer rounded p-2 px-3 hover:bg-[#ffffff26]">
             <img className="rounded" src={image} loading="lazy" alt="" />
             <p className="mb-1 mt-2 font-bold">{name}</p>
             <p className="text-sm text-main">{desc}</p>

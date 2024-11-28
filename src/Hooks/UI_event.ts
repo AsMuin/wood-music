@@ -1,32 +1,31 @@
 import { useEffect, useRef } from 'react';
 
-function useHorizontalScroll(sensitivity: number = 2) {
+function useHorizontalScroll(sensitivity: number = 2, throttleInterval: number = 200) {
     const elementRef = useRef<HTMLDivElement | null>(null);
     const eventTempRef = useRef(Date.now());
+
     useEffect(() => {
-        if (!elementRef.current) {
-            return;
-        }
         const element = elementRef.current;
-        function handleWheel(event: WheelEvent) {
+        if (!element) return;
+
+        const handleWheel = (event: WheelEvent) => {
             event.preventDefault();
             const currentTime = Date.now();
-            if (currentTime - eventTempRef.current < 200) {
-                return;
-            }
-            if (elementRef.current) {
-                elementRef.current.scrollLeft += event.deltaY * sensitivity;
+            if (currentTime - eventTempRef.current >= throttleInterval) {
+                element.scrollTo({
+                    left: element.scrollLeft + event.deltaY * sensitivity,
+                    behavior: 'smooth'
+                });
                 eventTempRef.current = currentTime;
             }
-        }
-        if (element) {
-            element.style.scrollBehavior = 'smooth';
-            element.addEventListener('wheel', handleWheel);
-        }
-        return () => {
-            element?.removeEventListener('wheel', handleWheel);
         };
-    }, [elementRef.current]);
+
+        element.addEventListener('wheel', handleWheel, { passive: false });
+
+        return () => {
+            element.removeEventListener('wheel', handleWheel);
+        };
+    }, [sensitivity, throttleInterval]);
 
     return elementRef;
 }
