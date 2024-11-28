@@ -2,14 +2,16 @@ import { useEffect, useRef } from 'react';
 
 function useHorizontalScroll(sensitivity: number = 2) {
     const elementRef = useRef<HTMLDivElement | null>(null);
-    const eventTempRef = useRef(Date.now())
+    const eventTempRef = useRef(Date.now());
     useEffect(() => {
-        if (!elementRef.current) { return; }
+        if (!elementRef.current) {
+            return;
+        }
         const element = elementRef.current;
         function handleWheel(event: WheelEvent) {
             event.preventDefault();
             const currentTime = Date.now();
-            if(currentTime - eventTempRef.current < 200){
+            if (currentTime - eventTempRef.current < 200) {
                 return;
             }
             if (elementRef.current) {
@@ -38,18 +40,18 @@ function useImageLazyLoad() {
         const image = imageRef.current;
         const imageURL = image.dataset.src;
         const oberver = new IntersectionObserver((entries, oberver) => {
-            entries.forEach((entry) => {
+            entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     (entry.target as HTMLImageElement).src = imageURL ?? '';
                     oberver.unobserve(entry.target);
                 }
-            })
-        })
+            });
+        });
         oberver.observe(image);
         return () => {
             oberver.unobserve(image);
-        }
-    }, [imageRef.current])
+        };
+    }, [imageRef.current]);
     return imageRef;
 }
 export { useHorizontalScroll, useImageLazyLoad };

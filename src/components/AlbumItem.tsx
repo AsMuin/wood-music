@@ -1,5 +1,5 @@
 function AlbumItem({ image, name, desc, id }: { image: string; name: string; desc: string; id: number }) {
-     // const imageRef = useImageLazyLoad();
+    // const imageRef = useImageLazyLoad();
     return (
         <div className="min-w-[180px] cursor-pointer rounded p-2 px-3 hover:bg-[#ffffff26]">
             <img className="rounded" src={image} loading="lazy" alt="" />
