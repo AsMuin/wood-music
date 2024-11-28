@@ -9,7 +9,7 @@ function Home() {
         <>
             <div className="mb-4">
                 <h1 className="my-5 text-2xl font-bold">精选歌单</h1>
-                <div className="hide-scrollbar flex overflow-auto" ref={albumsContainer}>
+                <div className="hide-scrollbar flex overflow-auto " ref={albumsContainer}>
                     {albumsData.map(album => (
                         <AlbumItem key={album.id} {...album} />
                     ))}
