@@ -1,30 +1,16 @@
-import { albumsData } from '@/assets/assets';
-import { useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import { createContext, useEffect, useRef } from 'react';
+
+export const DisplayContext = createContext<React.MutableRefObject<HTMLDivElement | null> | null>(null);
 
 function Display({ ...props }) {
     const displayRef = useRef<HTMLDivElement | null>(null);
-    const location = useLocation();
-    const isAlbum = location.pathname.includes('album');
-    const albumId = isAlbum ? location.pathname.split('/')[2] : null;
-    useEffect(() => {
-        const display = displayRef.current;
-        if (display && albumId) {
-            const album = albumsData.find(album => album.id === Number(albumId));
-            if (album) {
-                // 获取根元素
-                const root = document.documentElement;
-                const baseColor = getComputedStyle(root).getPropertyValue('--color-bg-base');
-                display.style.background = `linear-gradient(${album.bgColor},rgb(${baseColor}))`;
-            }
-        }
-        return () => {
-            if (display) {
-                display.style.backgroundColor = '';
-            }
-        };
-    }, [albumId]);
-    return <div ref={displayRef} className="w-[100%] overflow-auto rounded bg-base px-6 pt-4 text-main lg:ml-0 lg:w-[75%]" {...props}></div>;
+    return (
+        <div ref={displayRef} className="w-full overflow-auto rounded bg-gradient-to-b from-base to-base to-10% px-6 pt-4 text-main lg:ml-0 lg:w-[75%] duration-1000 bg-[length:200%_200%] bg-[center_bottom]" {...props}>
+            <DisplayContext.Provider value={displayRef}>
+                {props.children}
+            </DisplayContext.Provider>
+        </div>
+    )
 }
 
 export default Display;

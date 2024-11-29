@@ -1,11 +1,30 @@
 import { albumsData, assets, songsData } from '@/assets/assets';
+import { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-
+import { DisplayContext } from '@/components/Display';
 function Album() {
     const { id } = useParams();
     const albumData = albumsData.find(album => album.id === Number(id));
-    console.log(albumData);
-
+    const displayRef = useContext(DisplayContext);
+    useEffect(() => {
+        if (!displayRef) return;
+        const display = displayRef.current;
+        if (display && id) {
+            const album = albumsData.find(album => album.id === Number(id));
+            if (album) {
+                // 获取根元素
+                const root = document.documentElement;
+                const baseColor = getComputedStyle(root).getPropertyValue('--color-bg-base');
+                display.style.backgroundImage = `linear-gradient(${album.bgColor}, rgb(${baseColor}) 50%)`; //背景高已经设为200%了, 这里50%是从  整个高度50%  处开始渐变 也就是原高度100%
+                display.style.backgroundPosition = "center top"
+            }
+        }
+        return () => {
+            if (display) {
+                display.style.backgroundPosition = "center bottom";
+            }
+        };
+    }, [])
     return (
         <>
             <div className="md:item-end mt-10 flex flex-col gap-8 md:flex-row">

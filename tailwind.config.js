@@ -16,7 +16,8 @@ export default {
         extend: {
             colors: {
                 lightBlue: '#04A5FF',
-                lightGray: '#6e6e6e'
+                lightGray: '#6e6e6e',
+                base: withOpacityValue('--color-bg-base'),
             },
             // 设置字体颜色基础类
             textColor: {
