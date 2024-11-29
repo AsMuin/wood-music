@@ -1,7 +1,7 @@
 import { albumsData, assets, songsData } from '@/assets/assets';
 import { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { DisplayContext } from '@/components/Display';
+import DisplayContext from '@/service/context/Display';
 function Album() {
     const { id } = useParams();
     const albumData = albumsData.find(album => album.id === Number(id));
