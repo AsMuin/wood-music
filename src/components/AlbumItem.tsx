@@ -8,7 +8,7 @@ function AlbumItem({ image, name, desc, id }: { image: string; name: string; des
             onClick={() => {
                 navigate(`album/${id}`);
             }}
-            className="min-w-[180px] cursor-pointer rounded p-2 px-3 hover:bg-[#ffffff26]">
+            className="min-w-[180px] cursor-pointer rounded py-2 px-3 hover:bg-[#ffffff26] snap-start">
             <img className="rounded" src={image} loading="lazy" alt="" />
             <p className="mb-1 mt-2 font-bold">{name}</p>
             <p className="text-sm text-main">{desc}</p>
