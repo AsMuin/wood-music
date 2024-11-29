@@ -16,15 +16,15 @@ function Album() {
                 const root = document.documentElement;
                 const baseColor = getComputedStyle(root).getPropertyValue('--color-bg-base');
                 display.style.backgroundImage = `linear-gradient(${album.bgColor}, rgb(${baseColor}) 50%)`; //背景高已经设为200%了, 这里50%是从  整个高度50%  处开始渐变 也就是原高度100%
-                display.style.backgroundPosition = "center top"
+                display.style.backgroundPosition = 'center top';
             }
         }
         return () => {
             if (display) {
-                display.style.backgroundPosition = "center bottom";
+                display.style.backgroundPosition = 'center bottom';
             }
         };
-    }, [])
+    }, []);
     return (
         <>
             <div className="md:item-end mt-10 flex flex-col gap-8 md:flex-row">

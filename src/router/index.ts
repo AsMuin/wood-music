@@ -1,5 +1,4 @@
 import App from '@/App';
-import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import Album from '@/view/Album';
 import Home from '@/view/Home';
