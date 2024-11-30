@@ -12,6 +12,7 @@ function Sidebar() {
             icon: assets.search_icon
         }
     ];
+
     return (
         <div className="mr-2 hidden w-[25%] flex-col gap-2 text-main lg:flex">
             <div className="flex h-[15%] flex-col justify-around rounded bg-base">

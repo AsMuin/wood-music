@@ -17,7 +17,6 @@ function App() {
                 </Suspense>
             </div>
             <Player></Player>
-            <audio preload="auto"></audio>
         </div>
     );
 }

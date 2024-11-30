@@ -2,8 +2,10 @@ import { albumsData, assets, songsData } from '@/assets/assets';
 import { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import DisplayContext from '@/service/context/Display';
+import usePlayerStore from '@/service/store/Player';
 function Album() {
     const { id } = useParams();
+    const { updateSongData: updateAudio } = usePlayerStore(state => state.actions);
     const albumData = albumsData.find(album => album.id === Number(id));
     const displayRef = useContext(DisplayContext);
     useEffect(() => {
@@ -56,7 +58,10 @@ function Album() {
             </div>
             <hr />
             {songsData.map((song, index) => (
-                <div className="grid cursor-pointer grid-cols-3 items-center gap-2 p-2 text-main hover:bg-[#ffffff2b] sm:grid-cols-4" key={song.id}>
+                <div
+                    onClick={() => updateAudio(song.id)}
+                    className="grid cursor-pointer grid-cols-3 items-center gap-2 p-2 text-main hover:bg-[#ffffff2b] sm:grid-cols-4"
+                    key={song.id}>
                     <p className="">
                         <b className="mr-4">{index + 1}</b>
                         <img className="mr-5 inline w-10" src={song.image} alt="" />
