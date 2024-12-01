@@ -6,9 +6,10 @@ import { useShallow } from 'zustand/shallow';
 function Player() {
     const songData = usePlayerStore(useShallow(state => state.songData));
     const playStatus = usePlayerStore(state => state.playStatus);
-    const { togglePlay, pause, play, updateSongData } = usePlayerStore(state => state.actions);
+    const { togglePlay, pause, play, updateSongIndex } = usePlayerStore(state => state.actions);
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const barRef = useRef<HTMLHRElement | null>(null);
+    const barContainerRef = useRef<HTMLDivElement | null>(null);
     const [currentTime, setCurrentTime] = useState<string>('00:00');
     const onPlayerEnded = useCallback(() => {
         pause();
@@ -24,26 +25,28 @@ function Player() {
         }
         bar.style.width = '0%';
     }, [pause]);
-    // const onUpdateBar = useCallback((event: React.MouseEvent<HTMLDivElement, MouseEvent> | MouseEvent, changeCurrentTime: boolean = false) => {
-    //     const audio = audioRef.current;
-    //     const bar = barRef.current;
-    //     if (!audio || !bar) {
-    //         return;
-    //     }
-    //     const duration = audio.duration;
-    //     const element = event.target as HTMLDivElement;
-    //     const rect = element.getBoundingClientRect();
-    //     const x = event.clientX - rect.left;
-    //     // 限制 newWidth 范围在 0-1 之间
-    //     const newWidth = Math.max(0, Math.min(x / rect.width, 1));
-    //     const newTime = newWidth * duration;
-    //     audio.currentTime = newTime;
-    //     setCurrentTime(formatTime(newTime, 'mm:ss'));
-    //     bar.style.width = `${newWidth * 100}%`;
-    //     if (changeCurrentTime) {
-    //         audio.currentTime = newTime;
-    //     }
-    // }, []);
+    const onUpdateBar = useCallback((event: React.MouseEvent<HTMLDivElement, MouseEvent> | MouseEvent, changeCurrentTime: boolean = false) => {
+        const audio = audioRef.current;
+        const bar = barRef.current;
+        const barContainer = barContainerRef.current;
+
+        if (!audio || !bar || !barContainer) {
+            return;
+        }
+
+        const duration = audio.duration;
+        const rect = barContainer.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        // 限制 newWidth 范围在 0-1 之间
+        const newWidth = Math.max(0, Math.min(x / rect.width, 1));
+        const newTime = newWidth * duration;
+        audio.currentTime = newTime;
+        setCurrentTime(formatTime(newTime, 'mm:ss'));
+        bar.style.width = `${newWidth * 100}%`;
+        if (changeCurrentTime) {
+            audio.currentTime = newTime;
+        }
+    }, []);
     function handlePlayerBar(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
         const audio = audioRef.current;
         const bar = barRef.current;
@@ -71,42 +74,29 @@ function Player() {
         }
 
         audio.pause();
-        const element = e.target as HTMLDivElement;
-        const rect = element.getBoundingClientRect();
-        const duration = audio.duration;
         document.body.style.userSelect = 'none';
         audio.removeEventListener('ended', onPlayerEnded);
-        const updateBar = (event: MouseEvent | React.MouseEvent<HTMLDivElement, MouseEvent>, changeCurrentTime: boolean = false) => {
-            const x = event.clientX - rect.left;
-            // 限制 newWidth 范围在 0-1 之间
-            const newWidth = Math.max(0, Math.min(x / rect.width, 1));
-            const newTime = newWidth * duration;
-            audio.currentTime = newTime;
-            setCurrentTime(formatTime(newTime, 'mm:ss'));
-            bar.style.width = `${newWidth * 100}%`;
-            if (changeCurrentTime) {
-                audio.currentTime = newTime;
-            }
-        };
-        updateBar(e);
+
+        onUpdateBar(e);
         const finishMove = (e: MouseEvent) => {
             document.body.style.userSelect = 'auto';
-            updateBar(e, true);
+            onUpdateBar(e, true);
             if (!playStatus) {
                 play();
             } else {
                 audio.play();
             }
             audio.addEventListener('ended', onPlayerEnded);
-            window.removeEventListener('mousemove', updateBar);
+            window.removeEventListener('mousemove', onUpdateBar);
             window.removeEventListener('mouseup', finishMove);
         };
-        window.addEventListener('mousemove', updateBar);
+        window.addEventListener('mousemove', onUpdateBar);
         window.addEventListener('mouseup', finishMove);
     }
     useEffect(() => {
         const audio = audioRef.current;
         const bar = barRef.current;
+        console.log('useEffect', playStatus, songData);
         if (!audio || !bar) {
             return;
         }
@@ -141,14 +131,18 @@ function Player() {
             <div className="m-auto flex flex-col items-center gap-1">
                 <div className="flex gap-4">
                     <img className="w-4 cursor-pointer" src={assets.shuffle_icon} alt="" />
-                    <img className="w-4 cursor-pointer" src={assets.prev_icon} alt="" />
+                    <img onClick={() => updateSongIndex(prevIndex => prevIndex - 1)} className="w-4 cursor-pointer" src={assets.prev_icon} alt="" />
                     <img onClick={togglePlay} className="w-4 cursor-pointer" src={playStatus ? assets.pause_icon : assets.play_icon} alt="" />
-                    <img onClick={() => updateSongData(1)} className="w-4 cursor-pointer" src={assets.next_icon} alt="" />
+                    <img onClick={() => updateSongIndex(prevIndex => prevIndex + 1)} className="w-4 cursor-pointer" src={assets.next_icon} alt="" />
                     <img className="w-4 cursor-pointer" src={assets.loop_icon} alt="" />
                 </div>
                 <div className="flex items-center gap-5">
                     <p>{currentTime ?? 0}</p>
-                    <div onClick={handlePlayerBar} onMouseDown={moveBar} className="w-[60vw] max-w-[500px] cursor-pointer rounded-full bg-gray-300">
+                    <div
+                        ref={barContainerRef}
+                        onClick={handlePlayerBar}
+                        onMouseDown={moveBar}
+                        className="w-[60vw] max-w-[500px] cursor-pointer rounded-full bg-gray-300">
                         <hr ref={barRef} className="pointer-events-none h-1 w-0 rounded-full border-none bg-green-800" />
                     </div>
                     <p>{songData?.duration ?? '00:00'}</p>

@@ -1,15 +1,19 @@
 import { assets } from '@/assets/assets';
 import Button from './UI/Button';
 import Card from './UI/Card';
+import { useNavigate } from 'react-router-dom';
 function Sidebar() {
+    const navigate = useNavigate();
     const NavList = [
         {
             name: '首页',
-            icon: assets.home_icon
+            icon: assets.home_icon,
+            link: '/'
         },
         {
             name: '搜索',
-            icon: assets.search_icon
+            icon: assets.search_icon,
+            link: '/search'
         }
     ];
 
@@ -17,7 +21,7 @@ function Sidebar() {
         <div className="mr-2 hidden w-[25%] flex-col gap-2 text-main lg:flex">
             <div className="flex h-[15%] flex-col justify-around rounded bg-base">
                 {NavList.map((item, index) => (
-                    <div key={index} className="flex cursor-pointer items-center gap-3 pl-8">
+                    <div key={index} onClick={() => navigate(item.link)} className="flex cursor-pointer items-center gap-3 pl-8">
                         <img className="w-5" src={item.icon} alt="" />
                         <p className="font-bold">{item.name}</p>
                     </div>
