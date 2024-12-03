@@ -11,7 +11,7 @@ interface IFormSubmit {
 }
 type TFormType = "login" | "register"
 function Login({ visible, setVisible }: { visible: boolean, setVisible: (visible: boolean) => void }) {
-    const { register, handleSubmit, reset, formState: { errors, isSubmitSuccessful, isLoading } } = useForm<IFormSubmit>();
+    const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<IFormSubmit>();
     const [type, { toggle }] = useToggle<TFormType>("login", "register")
     const { login } = useUserStore(state => state.actions)
     const onSubmit: SubmitHandler<IFormSubmit> = async data => {
@@ -82,7 +82,8 @@ function Login({ visible, setVisible }: { visible: boolean, setVisible: (visible
     return (
         <>
             <Dialog visible={visible} setVisible={setVisible}>
-                <h3 className="text-invert font-bold text-2xl mb-2 hover:text-main  duration-500 ">{type === 'login' ? "登录" : "注册"}</h3>
+                <h3 className="text-invert font-bold text-2xl mb-2 hover:text-main  duration-500 ">{type === 'login' ? "登录" : "注册"}
+                </h3>
                 <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
                     {
                         formElement.map((item) => (
@@ -92,12 +93,18 @@ function Login({ visible, setVisible }: { visible: boolean, setVisible: (visible
                             </div>
                         ))
                     }
+                    <div onClick={toggle} className="text-end">
+                        <span className="ml-4 text-sm  font-medium cursor-pointer underline underline-offset-1">
+                            {type === 'login' ? "注册" : "登录"}点击这里
+                        </span>
+                    </div>
                     <div className="text-end ">
                         <button type="submit" className="btn rounded-full px-6 text-lg glass hover:scale-105 mr-5 relative top-5" >
-                            {isLoading ? <span className="loading loading-spinner"></span> : "确定"}
+                            {isSubmitting ? <span className="loading loading-spinner"></span> : "确定"}
                         </button>
                     </div>
                 </form>
+
             </Dialog>
         </>
     )
