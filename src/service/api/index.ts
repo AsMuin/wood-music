@@ -16,7 +16,18 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(async (config: InternalAxiosRequestConfig & IRequestConfig) => {
     try {
-        return config;
+        if (config.url === "/user/login" || config.url === "/user/register" || config.url === "/song/list") {
+            return config;
+        } else {
+            const token = localStorage.getItem("token");
+            if (!token) {
+                console.error("请先登录");
+                return Promise.reject('请先登录');
+            } else {
+                config.headers.Authorization = token;
+                return config;
+            }
+        }
     } catch (e) {
         console.error(e);
         return Promise.reject(e)
