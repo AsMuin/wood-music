@@ -4,11 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import Login from './Login';
 import { useState } from 'react';
 import useUserStore from '@/service/store/User';
-import defaultAvatar from '@/assets/spotify_logo.png'
+import defaultAvatar from '@/assets/spotify_logo.png';
 function Navbar() {
     const navigate = useNavigate();
-    const avatar = useUserStore(state => state.avatar)
-    const [dialogVisible, setDialogVisible] = useState(false)
+    const avatar = useUserStore(state => state.avatar);
+    const [dialogVisible, setDialogVisible] = useState(false);
     return (
         <>
             <div className="flex w-full items-center justify-between font-semibold">
@@ -21,14 +21,21 @@ function Navbar() {
                     <Button type="secondary" className="rounded-2xl">
                         安装应用程序
                     </Button>
-                    <img onClick={() => { setDialogVisible(true) }} src={avatar || defaultAvatar} className="flex h-7 w-7 items-center justify-center rounded-full   duration-500 hover:scale-125" />
+                    <img
+                        onClick={() => {
+                            setDialogVisible(true);
+                        }}
+                        src={avatar || defaultAvatar}
+                        className="flex h-7 w-7 items-center justify-center rounded-full duration-500 hover:scale-125"
+                        alt="avatar"
+                    />
                 </div>
             </div>
             <div className="mt-4 flex items-center gap-2">
                 <p className="cursor-pointer rounded-2xl bg-white px-4 py-1 text-black">所有</p>
                 <p className="cursor-pointer rounded-2xl bg-base px-4 py-1">音乐</p>
             </div>
-            <Login visible={dialogVisible} setVisible={setDialogVisible} ></Login>
+            <Login visible={dialogVisible} setVisible={setDialogVisible}></Login>
         </>
     );
 }

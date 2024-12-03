@@ -1,50 +1,50 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 
-function Dialog({ visible, setVisible, children }: { visible: boolean, setVisible: (visible: boolean) => void, children?: React.ReactNode }) {
+function Dialog({ visible, setVisible, children }: { visible: boolean; setVisible: (visible: boolean) => void; children?: React.ReactNode }) {
     const dialogRef = useRef<HTMLDialogElement | null>(null);
 
     useEffect(() => {
         const dialog = dialogRef.current;
         if (!dialog) {
-            return
+            return;
         }
         if (visible) {
-            dialog.showModal()
+            dialog.showModal();
         } else {
-            dialog.close()
+            dialog.close();
         }
-    }, [visible])
+    }, [visible]);
 
     useEffect(() => {
         const dialog = dialogRef.current;
         if (!dialog) {
-            return
+            return;
         }
         function onClose() {
-            setVisible(false)
+            setVisible(false);
         }
         function onShow() {
-            setVisible(true)
+            setVisible(true);
         }
-        dialog.addEventListener("close", onClose)
-        dialog.addEventListener("show", onShow)
+        dialog.addEventListener('close', onClose);
+        dialog.addEventListener('show', onShow);
         return () => {
-            dialog.removeEventListener("close", onClose)
-            dialog.removeEventListener("show", onShow)
-        }
-    }, [])
+            dialog.removeEventListener('close', onClose);
+            dialog.removeEventListener('show', onShow);
+        };
+    }, [setVisible]);
 
     return (
         <dialog ref={dialogRef} className="modal">
             <div className="modal-box bg-main/90">
                 {children}
                 <div className="modal-action">
-                    <form method="dialog" >
-                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-invert">✕</button>
+                    <form method="dialog">
+                        <button className="btn btn-circle btn-ghost btn-sm absolute right-2 top-2 text-invert">✕</button>
                     </form>
                 </div>
             </div>
         </dialog>
-    )
+    );
 }
 export default Dialog;
