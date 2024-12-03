@@ -93,8 +93,8 @@ function Login({ visible, setVisible }: { visible: boolean, setVisible: (visible
                             </div>
                         ))
                     }
-                    <div onClick={toggle} className="text-end">
-                        <span className="ml-4 text-sm  font-medium cursor-pointer underline underline-offset-1">
+                    <div className="text-end">
+                        <span onClick={toggle} className="ml-4 text-sm  font-medium cursor-pointer underline underline-offset-1 hover:text-red-500  duration-300">
                             {type === 'login' ? "注册" : "登录"}点击这里
                         </span>
                     </div>
