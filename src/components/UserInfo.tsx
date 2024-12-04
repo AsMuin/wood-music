@@ -1,8 +1,8 @@
 import useToggle from '@/Hooks/state/useToggle';
 import { assets } from '@/assets/assets';
-import DrawerContext from '@/service/context/Drawer';
+import { useDrawerContext } from '@/service/context/Drawer';
 import useUserStore from '@/service/store/User';
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 interface IFormSubmit {
     name: string;
@@ -13,7 +13,7 @@ interface IFormSubmit {
 function UserInfo() {
     const [isEdit, { setDefault, setReverse, toggle }] = useToggle(false, true);
     const userInfo = useUserStore(state => state);
-    const { drawerVisible } = useContext(DrawerContext)!;
+    const { drawerVisible } = useDrawerContext();
     const {
         register,
         handleSubmit,
@@ -90,7 +90,7 @@ function UserInfo() {
     return (
         <>
             <div className="text-end">
-                <input type="checkbox" className="toggle" checked={isEdit} onClick={toggle} />
+                <input type="checkbox" className="toggle" checked={isEdit} onChange={toggle} />
             </div>
             <h2 className="text-center text-2xl font-bold md:text-start">{isEdit ? '更改信息' : ' 个人信息'}</h2>
             <div className="mx-auto my-4">

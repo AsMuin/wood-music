@@ -17,19 +17,24 @@ function App() {
         }
     });
     return (
-        <Drawer content={<UserInfo></UserInfo>}>
-            <div className="h-screen bg-back p-2">
-                <div className="flex h-[90%] pb-2">
-                    <Sidebar></Sidebar>
-                    <Suspense fallback={<div>Loading...</div>}>
-                        <Display>
-                            <Navbar></Navbar>
-                            <Outlet />
-                        </Display>
-                    </Suspense>
+        <Drawer>
+            <Drawer.PageContent>
+                <div className="h-screen bg-back p-2">
+                    <div className="flex h-[90%] pb-2">
+                        <Sidebar></Sidebar>
+                        <Suspense fallback={<div>Loading...</div>}>
+                            <Display>
+                                <Navbar></Navbar>
+                                <Outlet />
+                            </Display>
+                        </Suspense>
+                    </div>
+                    <Player></Player>
                 </div>
-                <Player></Player>
-            </div>
+            </Drawer.PageContent>
+            <Drawer.Content>
+                <UserInfo />
+            </Drawer.Content>
         </Drawer>
     );
 }

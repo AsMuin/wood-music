@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+import { createContext, useContext } from 'react';
 interface IDrawerContext {
     drawerVisible: boolean;
     drawerToggle: () => void;
@@ -6,5 +6,12 @@ interface IDrawerContext {
     drawerOpen: () => void;
 }
 const DrawerContext = createContext<IDrawerContext | null>(null);
+function useDrawerContext() {
+    const context = useContext(DrawerContext);
+    if (!context) {
+        throw new Error('useDrawerContext must be used within a DrawerProvider');
+    }
+    return context;
+}
 
-export default DrawerContext;
+export { DrawerContext, useDrawerContext };

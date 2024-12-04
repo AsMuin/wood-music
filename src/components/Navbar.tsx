@@ -2,15 +2,15 @@ import { assets } from '@/assets/assets';
 import Button from './UI/Button';
 import { useNavigate } from 'react-router-dom';
 import Login from './Login';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import useUserStore from '@/service/store/User';
 import defaultAvatar from '@/assets/spotify_logo.png';
-import DrawerContext from '@/service/context/Drawer';
+import { useDrawerContext } from '@/service/context/Drawer';
 function Navbar() {
     const navigate = useNavigate();
     const avatar = useUserStore(state => state.avatar);
     const [dialogVisible, setDialogVisible] = useState(false);
-    const { drawerOpen, drawerClose, drawerToggle } = useContext(DrawerContext)!;
+    const { drawerOpen, drawerClose, drawerToggle } = useDrawerContext();
     const isLogin = useUserStore(state => state.email);
 
     return (
