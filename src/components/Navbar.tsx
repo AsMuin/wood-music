@@ -6,7 +6,6 @@ import { useContext, useState } from 'react';
 import useUserStore from '@/service/store/User';
 import defaultAvatar from '@/assets/spotify_logo.png';
 import DrawerContext from '@/service/context/Drawer';
-import UserInfo from './UserInfo';
 function Navbar() {
     const navigate = useNavigate();
     const avatar = useUserStore(state => state.avatar);
@@ -28,7 +27,11 @@ function Navbar() {
                     </Button>
                     <img
                         onClick={() => {
-                            isLogin ? drawerOpen() : setDialogVisible(true);
+                            if (isLogin) {
+                                drawerOpen();
+                            } else {
+                                setDialogVisible(true);
+                            }
                         }}
                         src={avatar || defaultAvatar}
                         className="flex h-7 w-7 items-center justify-center rounded-full duration-500 hover:scale-125"

@@ -15,11 +15,9 @@ function App() {
         if (!isLogin && localStorage.getItem('token')) {
             getUserInfo();
         }
-    })
+    });
     return (
-        <Drawer content={
-            <UserInfo></UserInfo>
-        }>
+        <Drawer content={<UserInfo></UserInfo>}>
             <div className="h-screen bg-back p-2">
                 <div className="flex h-[90%] pb-2">
                     <Sidebar></Sidebar>

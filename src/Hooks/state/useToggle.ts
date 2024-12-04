@@ -24,7 +24,7 @@ function useToggle<D = any, R = any>(defaultValue: D, reverseValue: R): ReturnTy
             setDefault,
             setReverse
         };
-    }, []);
+    }, [defaultValue, reverseValueOrigin]);
     return [value, actions];
 }
 
