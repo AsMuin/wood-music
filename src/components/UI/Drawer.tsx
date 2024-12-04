@@ -11,7 +11,7 @@ function Drawer({ children }: { children: React.ReactNode }) {
                 drawerOpen
             }}>
             <div className="drawer drawer-end">
-                <input type="checkbox" className="drawer-toggle" checked={drawerVisible} onChange={() => {}} />
+                <input type="checkbox" className="drawer-toggle" checked={drawerVisible} onChange={drawerToggle} />
                 {children}
             </div>
         </DrawerContext.Provider>
