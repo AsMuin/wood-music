@@ -2,7 +2,6 @@ import useToggle from '@/Hooks/state/useToggle';
 import { assets } from '@/assets/assets';
 import DrawerContext from '@/service/context/Drawer';
 import useUserStore from '@/service/store/User';
-import { UserInfo } from 'os';
 import { useContext, useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 interface IFormSubmit {
