@@ -2,13 +2,17 @@ import { assets } from '@/assets/assets';
 import Button from './UI/Button';
 import { useNavigate } from 'react-router-dom';
 import Login from './Login';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import useUserStore from '@/service/store/User';
 import defaultAvatar from '@/assets/spotify_logo.png';
+import DrawerContext from '@/service/context/Drawer';
 function Navbar() {
     const navigate = useNavigate();
     const avatar = useUserStore(state => state.avatar);
     const [dialogVisible, setDialogVisible] = useState(false);
+    const { drawerOpen, drawerClose, drawerToggle } = useContext(DrawerContext)!;
+    const isLogin = useUserStore(state => state.email);
+
     return (
         <>
             <div className="flex w-full items-center justify-between font-semibold">
@@ -23,7 +27,7 @@ function Navbar() {
                     </Button>
                     <img
                         onClick={() => {
-                            setDialogVisible(true);
+                            isLogin ? drawerOpen() : setDialogVisible(true);
                         }}
                         src={avatar || defaultAvatar}
                         className="flex h-7 w-7 items-center justify-center rounded-full duration-500 hover:scale-125"

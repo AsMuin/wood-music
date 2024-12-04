@@ -13,7 +13,7 @@ interface UserStore {
 const useUserStore = create<UserStore>()(
     devtools((set, get) => ({
         name: '',
-        email: '',
+        email: '2132133',
         avatar: '',
         actions: {
             login: async ({ email, password }) => {
