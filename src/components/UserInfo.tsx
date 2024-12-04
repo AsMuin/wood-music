@@ -78,7 +78,7 @@ function UserInfo() {
         const inputFile = document.createElement('input');
         inputFile.type = 'file';
     }
-    const onSumbit: SubmitHandler<IFormSubmit> = data => {
+    const onSubmit: SubmitHandler<IFormSubmit> = data => {
         console.log(data);
         setDefault();
     };
@@ -101,7 +101,7 @@ function UserInfo() {
                     </div>
                 </div>
                 <div>
-                    <form onSubmit={handleSubmit(onSumbit)}>
+                    <form onSubmit={handleSubmit(onSubmit)}>
                         {formConfig.map(item => (
                             <div className="group mx-auto mb-4 text-center text-lg" key={item.key}>
                                 {isEdit ? (
