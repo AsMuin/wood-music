@@ -2,7 +2,7 @@ import useToggle from "@/Hooks/state/useToggle"
 import { createContext, useEffect, useRef } from "react"
 import DrawerContext from "@/service/context/Drawer"
 
-function Drawer({ children }: { children: React.ReactNode }) {
+function Drawer({ children, content }: { children: React.ReactNode, content: React.ReactNode }) {
     const [drawerVisible, { toggle: drawerToggle, setDefault: drawerClose, setReverse: drawerOpen }] = useToggle<boolean, boolean>(false, true)
     const drawerBtnRef = useRef<HTMLInputElement | null>(null)
     useEffect(() => {
@@ -28,10 +28,9 @@ function Drawer({ children }: { children: React.ReactNode }) {
                 </div>
                 <div className="drawer-side">
                     <label onClick={drawerToggle} aria-label="close sidebar" className="drawer-overlay"></label>
-                    <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-                        <li><a>Sidebar Item 1</a></li>
-                        <li><a>Sidebar Item 2</a></li>
-                    </ul>
+                    <div className="menu bg-nav text-main min-h-full w-[60%] md:p-4 md:w-80">
+                        {content}
+                    </div>
                 </div>
             </div>
         </DrawerContext.Provider>

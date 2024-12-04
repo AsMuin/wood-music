@@ -1,18 +1,19 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { getUserInfo, userLogin } from '@/service/api/user';
-interface UserStore {
+export interface UserStore {
     name: string;
     email: string;
     avatar: string;
     actions: {
         login: ({ email, password }: { email: string; password: string }) => void;
         layout: () => void;
+        getUserInfo: () => void;
     };
 }
 const useUserStore = create<UserStore>()(
     devtools((set, get) => ({
-        name: '',
+        name: 'asmuin',
         email: '2132133',
         avatar: '',
         actions: {

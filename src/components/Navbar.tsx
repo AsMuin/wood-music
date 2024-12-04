@@ -6,6 +6,7 @@ import { useContext, useState } from 'react';
 import useUserStore from '@/service/store/User';
 import defaultAvatar from '@/assets/spotify_logo.png';
 import DrawerContext from '@/service/context/Drawer';
+import UserInfo from './UserInfo';
 function Navbar() {
     const navigate = useNavigate();
     const avatar = useUserStore(state => state.avatar);
