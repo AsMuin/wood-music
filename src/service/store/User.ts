@@ -1,55 +1,75 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
-import { getUserInfo, userLogin } from '@/service/api/user';
-export interface UserStore {
+import { getUserInfo, uploadAvatar, userLogin } from '@/service/api/user';
+export interface IUser{
     name: string;
     email: string;
     avatar: string;
+}
+export interface UserStore {
+    state:IUser
     actions: {
         login: ({ email, password }: { email: string; password: string }) => void;
         layout: () => void;
         getUserInfo: () => void;
+        updateUserAvatar: (avatar: File)=>void
     };
 }
 const useUserStore = create<UserStore>()(
     devtools((set, get) => ({
-        name: 'asmuin',
-        email: '2132133',
-        avatar: '',
+        state:{
+            name: 'asmuin',
+            email: '2132133',
+            avatar: '',
+        },
         actions: {
             login: async ({ email, password }) => {
                 try {
-                    const response = await userLogin<Omit<UserStore, 'actions'>>({ email, password });
+                    const response = await userLogin<IUser>({ email, password });
                     const { data } = response;
                     if (response.token && data?.name && data?.email) {
-                        set({ ...data });
+                        set({state:{...data}});
                     } else {
-                        Promise.reject('用户数据异常');
+                        return Promise.reject('用户数据异常');
                     }
                 } catch (error) {
                     console.error(error);
-                    Promise.reject(error);
+                    return Promise.reject(error);
                 }
             },
             layout: () => {
                 localStorage.removeItem('token');
-                set({ name: '', email: '', avatar: '' });
+                set({state:{ name: '', email: '', avatar: '' }});
             },
             getUserInfo: async () => {
                 try {
-                    const state = get();
-                    if (localStorage.getItem('token') && (!state.name || !state.email)) {
-                        const response = await getUserInfo<Omit<UserStore, 'actions'>>();
+                    const store = get();
+                    if (localStorage.getItem('token') && (!store.state.name || !store.state.email)) {
+                        const response = await getUserInfo<IUser>();
                         const { data } = response;
                         if (response.token && data?.name && data?.email) {
-                            set({ ...data });
+                           set({state:{ ...data }});
                         } else {
-                            Promise.reject('用户数据异常');
+                           return Promise.reject('用户数据异常');
                         }
                     }
                 } catch (error) {
                     console.error(error);
-                    Promise.reject(error);
+                    return Promise.reject(error);
+                }
+            },
+            updateUserAvatar: async (avatar: File)=>{
+                try {
+                    const response = await uploadAvatar<IUser>({ image: avatar });
+                    const { data } = response;
+                    if(data?.avatar){
+                         set({state:{...data}});
+                    }else{
+                        return Promise.reject('更新数据异常');
+                    }
+                } catch (error) {
+                    console.error(error);
+                    return Promise.reject(error);
                 }
             }
         }

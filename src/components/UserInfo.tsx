@@ -12,7 +12,8 @@ interface IFormSubmit {
 }
 function UserInfo() {
     const [isEdit, { setDefault, setReverse, toggle }] = useToggle(false, true);
-    const userInfo = useUserStore(state => state);
+    const userInfo = useUserStore(store => store.state);
+    const {updateUserAvatar} = useUserStore(store=>store.actions)
     const { drawerVisible } = useDrawerContext();
     const {
         register,
@@ -77,6 +78,15 @@ function UserInfo() {
     function onUploadFile() {
         const inputFile = document.createElement('input');
         inputFile.type = 'file';
+        inputFile.style.display = 'none';
+        inputFile.onchange= async (event: any)=>{
+            console.log(inputFile.files);
+            const avatar = event.target.files[0];
+            await updateUserAvatar(avatar)
+            inputFile.onchange = null;
+            document.body.removeChild(inputFile);
+        }
+        inputFile.click();
     }
     const onSubmit: SubmitHandler<IFormSubmit> = data => {
         console.log(data);

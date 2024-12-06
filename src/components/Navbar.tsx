@@ -8,10 +8,10 @@ import defaultAvatar from '@/assets/spotify_logo.png';
 import { useDrawerContext } from '@/service/context/Drawer';
 function Navbar() {
     const navigate = useNavigate();
-    const avatar = useUserStore(state => state.avatar);
+    const avatar = useUserStore(store => store.state.avatar);
     const [dialogVisible, setDialogVisible] = useState(false);
     const { drawerOpen, drawerClose, drawerToggle } = useDrawerContext();
-    const isLogin = useUserStore(state => state.email);
+    const isLogin = useUserStore(store => store.state.email);
 
     return (
         <>
