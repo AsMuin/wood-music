@@ -36,7 +36,7 @@ function Dialog({ visible, setVisible, children }: { visible: boolean; setVisibl
 
     return (
         <dialog ref={dialogRef} className="modal">
-            <div className="modal-box bg-main/90">
+            <div className="modal-box bg-muted/95">
                 {children}
                 <div className="modal-action">
                     <form method="dialog">

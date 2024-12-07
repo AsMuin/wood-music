@@ -13,8 +13,8 @@ interface IFormSubmit {
 function UserInfo() {
     const [isEdit, { setDefault, setReverse, toggle }] = useToggle(false, true);
     const userInfo = useUserStore(store => store.state);
-    const {updateUserAvatar} = useUserStore(store=>store.actions)
-    const { drawerVisible } = useDrawerContext();
+    const { updateUserAvatar, layout } = useUserStore(store => store.actions);
+    const { drawerVisible, drawerClose } = useDrawerContext();
     const {
         register,
         handleSubmit,
@@ -28,6 +28,11 @@ function UserInfo() {
             confirmPassword: ''
         }
     });
+    function onLayout() {
+        reset();
+        drawerClose();
+        layout();
+    }
     const formConfig = [
         {
             key: 'name',
@@ -79,13 +84,12 @@ function UserInfo() {
         const inputFile = document.createElement('input');
         inputFile.type = 'file';
         inputFile.style.display = 'none';
-        inputFile.onchange= async (event: any)=>{
+        inputFile.onchange = async (event: any) => {
             console.log(inputFile.files);
             const avatar = event.target.files[0];
-            await updateUserAvatar(avatar)
+            await updateUserAvatar(avatar);
             inputFile.onchange = null;
-            document.body.removeChild(inputFile);
-        }
+        };
         inputFile.click();
     }
     const onSubmit: SubmitHandler<IFormSubmit> = data => {
@@ -96,16 +100,21 @@ function UserInfo() {
         if (!drawerVisible) {
             reset();
         }
-    }, [drawerVisible]);
+    }, [drawerVisible, reset]);
     return (
         <>
-            <div className="text-end">
+            <div className="mb-4 flex items-center justify-between">
+                <p className="cursor-pointer text-highlight underline underline-offset-4 duration-500 hover:text-red-500" onClick={onLayout}>
+                    登出
+                </p>
                 <input type="checkbox" className="toggle" checked={isEdit} onChange={toggle} />
             </div>
             <h2 className="text-center text-2xl font-bold md:text-start">{isEdit ? '更改信息' : ' 个人信息'}</h2>
             <div className="mx-auto my-4">
-                <div className="group relative mx-auto mb-8 h-14 w-14 overflow-hidden rounded-full duration-500 hover:scale-110">
-                    <img className="h-full w-full" src={assets.spotify_logo} alt="" />
+                <div
+                    className="group relative mx-auto mb-8 h-14 w-14 overflow-hidden rounded-full duration-500 hover:scale-110"
+                    onClick={onUploadFile}>
+                    <img className="h-full w-full" src={userInfo.avatar || assets.spotify_logo} alt="" />
                     <div className="absolute top-0 hidden h-full w-full cursor-pointer bg-muted/80 text-center text-xs leading-[3.5rem] group-hover:block">
                         修改头像
                     </div>

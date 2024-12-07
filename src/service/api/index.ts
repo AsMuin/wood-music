@@ -37,6 +37,9 @@ axiosInstance.interceptors.response.use(async (response: AxiosResponse<IResponse
     try {
         const { data } = response;
         if (data.success) {
+            if (data.token) {
+                localStorage.setItem('token', data.token);
+            }
             return response;
         } else {
             return Promise.reject(data.message);

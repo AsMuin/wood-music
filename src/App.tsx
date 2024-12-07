@@ -8,34 +8,40 @@ import Drawer from './components/UI/Drawer';
 import UserInfo from './components/UserInfo';
 import useUserStore from './service/store/User';
 import useOnMounted from './Hooks/lifeCycle/onMounted';
+import Message from './components/UI/Message';
+import MessageManager from './components/UI/Message';
 function App() {
     const getUserInfo = useUserStore(state => state.actions.getUserInfo);
-    const isLogin = useUserStore(state => state.email);
+    const isLogin = useUserStore(store => store.state.email);
     useOnMounted(() => {
         if (!isLogin && localStorage.getItem('token')) {
             getUserInfo();
         }
     });
     return (
-        <Drawer>
-            <Drawer.PageContent>
-                <div className="h-screen bg-back p-2">
-                    <div className="flex h-[90%] pb-2">
-                        <Sidebar></Sidebar>
-                        <Suspense fallback={<div>Loading...</div>}>
-                            <Display>
-                                <Navbar></Navbar>
-                                <Outlet />
-                            </Display>
-                        </Suspense>
+        <>
+            <MessageManager />
+            <Drawer>
+                <Drawer.PageContent>
+                    <Message></Message>
+                    <div className="h-screen bg-back p-2">
+                        <div className="flex h-[90%] pb-2">
+                            <Sidebar></Sidebar>
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <Display>
+                                    <Navbar></Navbar>
+                                    <Outlet />
+                                </Display>
+                            </Suspense>
+                        </div>
+                        <Player></Player>
                     </div>
-                    <Player></Player>
-                </div>
-            </Drawer.PageContent>
-            <Drawer.Content>
-                <UserInfo />
-            </Drawer.Content>
-        </Drawer>
+                </Drawer.PageContent>
+                <Drawer.Content>
+                    <UserInfo />
+                </Drawer.Content>
+            </Drawer>
+        </>
     );
 }
 export default App;

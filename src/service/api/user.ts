@@ -15,6 +15,9 @@ function userRegister<T>({ email, password, name }: { email: string; password: s
 }
 
 function uploadAvatar<T>({ image }: { image: File }, extraConfig?: IRequestConfig) {
-    return Request<T>({ url: `${BASEURL}/avatar`, method: 'post', data: { image }, headers: { 'Content-Type': 'multipart/form-data' } }, extraConfig);
+    return Request<T>(
+        { url: `${BASEURL}/uploadAvatar`, method: 'post', data: { image }, headers: { 'Content-Type': 'multipart/form-data' } },
+        extraConfig
+    );
 }
 export { getUserInfo, userLogin, userRegister, uploadAvatar };
