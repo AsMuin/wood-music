@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import { showMessage } from '@/components/UI/Message';
 interface IResponse<T = any> {
     success: boolean;
     message: string;
@@ -21,14 +22,16 @@ axiosInstance.interceptors.request.use(async (config: InternalAxiosRequestConfig
             const token = localStorage.getItem('token');
             if (!token) {
                 console.error('请先登录');
+                showMessage({ type: 'warning', message: '请先登录' });
                 return Promise.reject('请先登录');
             } else {
                 config.headers.Authorization = token;
                 return config;
             }
         }
-    } catch (e) {
+    } catch (e: any) {
         console.error(e);
+        showMessage({ type: 'error', message: e.message });
         return Promise.reject(e);
     }
 });
@@ -42,10 +45,12 @@ axiosInstance.interceptors.response.use(async (response: AxiosResponse<IResponse
             }
             return response;
         } else {
+            showMessage({ type: 'error', message: data.message });
             return Promise.reject(data.message);
         }
-    } catch (e) {
+    } catch (e: any) {
         console.error(e);
+        showMessage({ type: 'error', message: e.message });
         return Promise.reject(e);
     }
 });

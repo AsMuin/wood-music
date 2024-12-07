@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { userRegister } from '@/service/api/user';
 import useUserStore from '@/service/store/User';
 import useToggle from '@/Hooks/state/useToggle';
+import { showMessage } from './UI/Message';
 interface IFormSubmit {
     name: string;
     password: string;
@@ -25,6 +26,7 @@ function Login({ visible, setVisible }: { visible: boolean; setVisible: (visible
             if (type === 'login') {
                 await login(data);
                 setVisible(false);
+                showMessage({ type: 'success', message: '登录成功' });
             } else {
                 await userRegister(data);
                 reset();
