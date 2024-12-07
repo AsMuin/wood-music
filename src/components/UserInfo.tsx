@@ -1,9 +1,11 @@
 import useToggle from '@/Hooks/state/useToggle';
 import { assets } from '@/assets/assets';
 import { useDrawerContext } from '@/service/context/Drawer';
-import useUserStore from '@/service/store/User';
+import useUserStore, { IUser } from '@/service/store/User';
 import { useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { showMessage } from './MessageManager';
+import { getUserInfo } from '@/service/api/user';
 interface IFormSubmit {
     name: string;
     email: string;
@@ -11,9 +13,9 @@ interface IFormSubmit {
     confirmPassword: string;
 }
 function UserInfo() {
-    const [isEdit, { setDefault, setReverse, toggle }] = useToggle(false, true);
+    const [isEdit, { setDefault, toggle }] = useToggle(false, true);
     const userInfo = useUserStore(store => store.state);
-    const { updateUserAvatar, layout } = useUserStore(store => store.actions);
+    const { updateUserAvatar, layout, updateUserInfo } = useUserStore(store => store.actions);
     const { drawerVisible, drawerClose } = useDrawerContext();
     const {
         register,
@@ -21,11 +23,25 @@ function UserInfo() {
         reset,
         formState: { errors, isSubmitting }
     } = useForm<IFormSubmit>({
-        defaultValues: {
-            name: userInfo.name,
-            email: userInfo.email,
-            password: '',
-            confirmPassword: ''
+        defaultValues: async () => {
+            const { data } = await getUserInfo<IUser>();
+            if (data) {
+                return {
+                    name: data.name,
+                    email: data.email,
+                    originalPassword: '',
+                    password: '',
+                    confirmPassword: ''
+                };
+            } else {
+                return {
+                    name: '',
+                    email: '',
+                    originalPassword: '',
+                    password: '',
+                    confirmPassword: ''
+                };
+            }
         }
     });
     function onLayout() {
@@ -54,6 +70,15 @@ function UserInfo() {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                     message: '请输入正确的邮箱'
                 }
+            }
+        },
+        {
+            key: 'originalPassword',
+            label: '原密码',
+            type: 'password',
+            placeholder: '请输入原来的密码',
+            config: {
+                required: '请填写原来的密码'
             }
         },
         {
@@ -92,9 +117,15 @@ function UserInfo() {
         };
         inputFile.click();
     }
-    const onSubmit: SubmitHandler<IFormSubmit> = data => {
-        console.log(data);
-        setDefault();
+    const onSubmit: SubmitHandler<IFormSubmit> = async data => {
+        try {
+            setDefault();
+            await updateUserInfo(data);
+            toggle();
+            showMessage({ type: 'success', message: '修改成功' });
+        } catch (error: any) {
+            console.error(error);
+        }
     };
     useEffect(() => {
         if (!drawerVisible) {

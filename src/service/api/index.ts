@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
-import { showMessage } from '@/components/UI/Message';
+import { showMessage } from '@/components/MessageManager';
 interface IResponse<T = any> {
     success: boolean;
     message: string;

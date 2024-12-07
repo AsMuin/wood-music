@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { userRegister } from '@/service/api/user';
 import useUserStore from '@/service/store/User';
 import useToggle from '@/Hooks/state/useToggle';
-import { showMessage } from './UI/Message';
+import { showMessage } from './MessageManager';
 interface IFormSubmit {
     name: string;
     password: string;

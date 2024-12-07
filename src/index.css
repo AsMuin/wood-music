@@ -40,3 +40,9 @@ muted 「失效」按钮填充色，也是选中字体时的背景色
         --color-fill-muted: 60, 70, 120; /* 深蓝紫 */
     }
 }
+/* 解决滚动条样式问题 */
+@layer base {
+    html {
+        scrollbar-gutter: auto !important;
+    }
+}

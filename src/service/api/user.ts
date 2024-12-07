@@ -20,4 +20,18 @@ function uploadAvatar<T>({ image }: { image: File }, extraConfig?: IRequestConfi
         extraConfig
     );
 }
-export { getUserInfo, userLogin, userRegister, uploadAvatar };
+
+function updateUserInfo<T>(
+    { name, email, password, confirmPassword }: { name: string; email: string; password: string; confirmPassword: string },
+    extraConfig?: IRequestConfig
+) {
+    return Request<T>(
+        {
+            url: `${BASEURL}/updateUserInfo`,
+            method: 'post',
+            data: { name, email, password, confirmPassword }
+        },
+        extraConfig
+    );
+}
+export { getUserInfo, userLogin, userRegister, uploadAvatar, updateUserInfo };

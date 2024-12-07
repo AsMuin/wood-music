@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
-import { getUserInfo, uploadAvatar, userLogin } from '@/service/api/user';
+import { getUserInfo, updateUserInfo, uploadAvatar, userLogin } from '@/service/api/user';
 export interface IUser {
     name: string;
     email: string;
@@ -13,6 +13,17 @@ export interface UserStore {
         layout: () => void;
         getUserInfo: () => void;
         updateUserAvatar: (avatar: File) => void;
+        updateUserInfo: ({
+            name,
+            email,
+            password,
+            confirmPassword
+        }: {
+            name: string;
+            email: string;
+            password: string;
+            confirmPassword: string;
+        }) => void;
     };
 }
 const useUserStore = create<UserStore>()(
@@ -68,6 +79,33 @@ const useUserStore = create<UserStore>()(
                         return Promise.reject('更新数据异常');
                     }
                 } catch (error) {
+                    console.error(error);
+                    return Promise.reject(error);
+                }
+            },
+            updateUserInfo: async ({
+                name,
+                email,
+                password,
+                confirmPassword
+            }: {
+                name: string;
+                email: string;
+                password: string;
+                confirmPassword: string;
+            }) => {
+                try {
+                    const response = await updateUserInfo<IUser>({
+                        name,
+                        email,
+                        password,
+                        confirmPassword
+                    });
+                    const { data } = response;
+                    if (data?.name && data?.email) {
+                        set({ state: { ...data } });
+                    }
+                } catch (error: any) {
                     console.error(error);
                     return Promise.reject(error);
                 }

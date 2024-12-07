@@ -8,8 +8,8 @@ import Drawer from './components/UI/Drawer';
 import UserInfo from './components/UserInfo';
 import useUserStore from './service/store/User';
 import useOnMounted from './Hooks/lifeCycle/onMounted';
-import Message from './components/UI/Message';
-import MessageManager from './components/UI/Message';
+import Message from './components/MessageManager';
+import MessageManager from './components/MessageManager';
 function App() {
     const getUserInfo = useUserStore(state => state.actions.getUserInfo);
     const isLogin = useUserStore(store => store.state.email);
