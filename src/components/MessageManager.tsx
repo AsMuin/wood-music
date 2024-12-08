@@ -1,4 +1,3 @@
-import useOnMounted from '@/Hooks/lifeCycle/onMounted';
 import { useCallback, useState } from 'react';
 import { createPortal } from 'react-dom';
 import Message from './UI/Message';
