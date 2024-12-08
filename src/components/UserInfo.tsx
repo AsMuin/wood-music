@@ -113,6 +113,7 @@ function UserInfo() {
             console.log(inputFile.files);
             const avatar = event.target.files[0];
             await updateUserAvatar(avatar);
+            showMessage({ type: 'success', message: '上传成功' });
             inputFile.onchange = null;
         };
         inputFile.click();
@@ -186,8 +187,8 @@ function UserInfo() {
                         ))}
                         {isEdit ? (
                             <div className="text-center">
-                                <button type="submit" className="btn glass rounded-full bg-main duration-500">
-                                    确定
+                                <button type="submit" disabled={isSubmitting} className="btn glass rounded-full bg-main duration-500">
+                                    {isSubmitting ? <span className="loading loading-spinner loading-md"></span> : '确定'}
                                 </button>
                             </div>
                         ) : null}

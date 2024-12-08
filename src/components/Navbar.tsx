@@ -10,7 +10,7 @@ function Navbar() {
     const navigate = useNavigate();
     const avatar = useUserStore(store => store.state.avatar);
     const [dialogVisible, setDialogVisible] = useState(false);
-    const { drawerOpen, drawerClose, drawerToggle } = useDrawerContext();
+    const { drawerOpen } = useDrawerContext();
     const isLogin = useUserStore(store => store.state.email);
 
     return (

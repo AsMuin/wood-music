@@ -29,6 +29,7 @@ function Login({ visible, setVisible }: { visible: boolean; setVisible: (visible
                 showMessage({ type: 'success', message: '登录成功' });
             } else {
                 await userRegister(data);
+                showMessage({ type: 'success', message: '注册成功, 请登录' });
                 reset();
                 toggle();
             }
