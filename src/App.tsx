@@ -37,11 +37,7 @@ function App() {
                         <Player></Player>
                     </div>
                 </Drawer.PageContent>
-                <Drawer.Content>
-                    {
-                        isLogin && <UserInfo />
-                    }
-                </Drawer.Content>
+                <Drawer.Content>{isLogin && <UserInfo />}</Drawer.Content>
             </Drawer>
         </>
     );
