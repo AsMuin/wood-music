@@ -6,6 +6,7 @@ import { useState } from 'react';
 import useUserStore from '@/service/store/User';
 import defaultAvatar from '@/assets/spotify_logo.png';
 import { useDrawerContext } from '@/service/context/Drawer';
+import ThemeController from './ThemeController';
 function Navbar() {
     const navigate = useNavigate();
     const avatar = useUserStore(store => store.state.avatar);
@@ -21,6 +22,7 @@ function Navbar() {
                     <img onClick={() => navigate(1)} className="w-8 cursor-pointer rounded-2xl bg-base p-2" src={assets.arrow_right} alt="" />
                 </div>
                 <div className="flex items-center gap-4">
+                    <ThemeController />
                     <Button className="hidden rounded-2xl md:block">开通会员</Button>
                     <Button type="secondary" className="rounded-2xl">
                         安装应用程序
