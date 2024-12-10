@@ -62,8 +62,8 @@ function Album() {
                     onClick={() => updateAudio(song.id)}
                     className="grid cursor-pointer grid-cols-3 items-center gap-2 p-2 text-main hover:bg-[#ffffff2b] sm:grid-cols-4"
                     key={song.id}>
-                    <p className="">
-                        <b className="mr-4">{index + 1}</b>
+                    <p className="flex items-center justify-center">
+                        <b className="mr-4 min-w-5">{index + 1}</b>
                         <img className="mr-5 inline w-10" src={song.image} alt="" />
                         {song.name}
                     </p>
