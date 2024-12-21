@@ -1,6 +1,6 @@
 import { assets } from '@/assets/assets';
 import Button from './UI/Button';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Login from './Login';
 import { useState } from 'react';
 import useUserStore from '@/service/store/User';
@@ -41,9 +41,13 @@ function Navbar() {
                     />
                 </div>
             </div>
-            <div className="mt-4 flex items-center gap-2">
-                <p className="cursor-pointer rounded-2xl bg-white px-4 py-1 text-black">所有</p>
-                <p className="cursor-pointer rounded-2xl bg-base px-4 py-1">音乐</p>
+            <div className="flex items-center gap-2">
+                <NavLink to="/" className="cursor-pointer rounded-2xl px-4 py-1">
+                    所有
+                </NavLink>
+                <NavLink to="/song" className="cursor-pointer rounded-2xl bg-base px-4 py-1">
+                    音乐
+                </NavLink>
             </div>
             <Login visible={dialogVisible} setVisible={setDialogVisible}></Login>
         </>

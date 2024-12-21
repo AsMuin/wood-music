@@ -6,6 +6,11 @@ interface IResponse<T = any> {
     data?: T;
     token?: string;
 }
+
+export interface IQueryList<T> {
+    itemList: T;
+}
+
 export interface IRequestConfig extends AxiosRequestConfig {
     toastError?: boolean;
 }

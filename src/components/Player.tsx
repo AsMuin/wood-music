@@ -29,7 +29,6 @@ function Player() {
         const audio = audioRef.current;
         const bar = barRef.current;
         const barContainer = barContainerRef.current;
-
         if (!audio || !bar || !barContainer) {
             return;
         }
@@ -93,31 +92,36 @@ function Player() {
         window.addEventListener('mousemove', onUpdateBar);
         window.addEventListener('mouseup', finishMove);
     }
+
+    //切换歌曲变化状态
     useEffect(() => {
         const audio = audioRef.current;
         const bar = barRef.current;
-        console.log('useEffect', playStatus, songData);
+        console.log('useEffect', playStatus);
         if (!audio || !bar) {
             return;
         }
+
+        const onUpdateBar = () => {
+            const currentTime = audio.currentTime;
+            const duration = audio.duration;
+            const newWidth = (currentTime / duration) * 100;
+            setCurrentTime(formatTime(currentTime, 'mm:ss'));
+            bar.style.width = `${newWidth}%`;
+        };
         if (playStatus) {
             audio.play();
-            audio.ontimeupdate = () => {
-                const currentTime = audio.currentTime;
-                const duration = audio.duration;
-                const newWidth = (currentTime / duration) * 100;
-                setCurrentTime(formatTime(currentTime, 'mm:ss'));
-                bar.style.width = `${newWidth}%`;
-            };
+            audio.addEventListener('timeupdate', onUpdateBar);
             audio.addEventListener('ended', onPlayerEnded);
         } else {
             audio.pause();
         }
+
         return () => {
-            audio.ontimeupdate = null;
+            audio.removeEventListener('timeupdate', onUpdateBar);
             audio.removeEventListener('ended', onPlayerEnded);
         };
-    }, [playStatus, pause, songData, onPlayerEnded]);
+    }, [playStatus, pause, onPlayerEnded, songData]);
 
     return (
         <div className="flex h-[10%] items-center justify-between bg-nav px-4 py-1 text-main">

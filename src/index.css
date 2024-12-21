@@ -46,3 +46,7 @@ muted 「失效」按钮填充色，也是选中字体时的背景色
         scrollbar-gutter: auto !important;
     }
 }
+a.active {
+    color: #667eea;
+    background-color: white;
+}

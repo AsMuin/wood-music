@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { songsData } from '@/assets/assets';
 interface ISongData {
-    id: number;
+    _id: string;
     desc: string;
     name: string;
     file: string;
@@ -26,8 +26,9 @@ interface PlayerStore {
         play: () => void;
         togglePlay: () => void;
         updateTrackTime: (time: number) => void;
-        updateSongData: (id: number) => void;
+        updateSongData: (id: string) => void;
         updateSongIndex: (updateIndex: number | ((prevIndex: number) => number)) => void;
+        updateSongList: (songList: ISongData[] | ((prevSongList: ISongData[]) => ISongData[])) => void;
     };
 }
 const usePlayerStore = create<PlayerStore>()(
@@ -46,14 +47,14 @@ const usePlayerStore = create<PlayerStore>()(
                     setAudio: audio => set({ audio }, undefined, 'audio/set'),
                     resetAudio: () => set({ audio: null }, undefined, 'audio/reset'),
                     resetSongData: () =>
-                        set({ songData: { id: 0, name: '', desc: '', file: '', image: '', duration: '' } }, undefined, 'songData/reset'),
+                        set({ songData: { _id: '0', name: '', desc: '', file: '', image: '', duration: '' } }, undefined, 'songData/reset'),
                     pause: () => set({ playStatus: false }, undefined, 'playStatus/pause'),
                     play: () => set({ playStatus: true }, undefined, 'playStatus/play'),
                     togglePlay: () => set(state => ({ playStatus: !state.playStatus }), undefined, `playStatus/toggle=>${!get().playStatus}`),
                     updateTrackTime: (time: number) => set({ trackTime: time }, undefined, 'trackTime/update'),
-                    updateSongData: (id: number) =>
+                    updateSongData: (id: string) =>
                         set(state => {
-                            const songData = state.songList.find(song => song.id === id);
+                            const songData = state.songList.find(song => song._id === id);
                             return {
                                 songData,
                                 songIndex: state.songList.indexOf(songData || state.songData) ?? -1,
@@ -78,7 +79,16 @@ const usePlayerStore = create<PlayerStore>()(
                             },
                             undefined,
                             'songData/updateIndex'
-                        )
+                        ),
+                    updateSongList: (songList: ISongData[] | ((prevSongList: ISongData[]) => ISongData[])) => {
+                        if (typeof songList === 'function') {
+                            const prevSongList = get().songList;
+                            const newSongList = songList(prevSongList);
+                            set({ songList: newSongList }, undefined, 'songList/update');
+                        } else {
+                            set({ songList }, undefined, 'songList/update');
+                        }
+                    }
                 }
             };
         },

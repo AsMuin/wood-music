@@ -116,7 +116,7 @@ export const albumsData = [
 
 export const songsData = [
     {
-        id: 0,
+        _id: '0',
         name: 'Song One',
         image: img1,
         file: song1,
@@ -124,7 +124,7 @@ export const songsData = [
         duration: '03:28'
     },
     {
-        id: 1,
+        _id: '1',
         name: 'Song Two',
         image: img2,
         file: song2,
@@ -132,7 +132,7 @@ export const songsData = [
         duration: '03:58'
     },
     {
-        id: 2,
+        _id: '2',
         name: 'Song Three',
         image: img3,
         file: song3,
@@ -140,7 +140,7 @@ export const songsData = [
         duration: '03:28'
     },
     {
-        id: 3,
+        _id: '3',
         name: 'Song Four',
         image: img4,
         file: song1,
@@ -148,7 +148,7 @@ export const songsData = [
         duration: '03:28'
     },
     {
-        id: 4,
+        _id: '4',
         name: 'Song Five',
         image: img5,
         file: song2,
@@ -156,7 +156,7 @@ export const songsData = [
         duration: '03:58'
     },
     {
-        id: 5,
+        _id: '5',
         name: 'Song Six',
         image: img14,
         file: song3,
@@ -164,7 +164,7 @@ export const songsData = [
         duration: '03:28'
     },
     {
-        id: 6,
+        _id: '6',
         name: 'Song Seven',
         image: img7,
         file: song1,
@@ -172,7 +172,7 @@ export const songsData = [
         duration: '03:28'
     },
     {
-        id: 7,
+        _id: '7',
         name: 'Song Eight',
         image: img12,
         file: song2,
@@ -180,7 +180,7 @@ export const songsData = [
         duration: '03:58'
     },
     {
-        id: 8,
+        _id: '8',
         name: 'Song Nine',
         image: img13,
         file: song2,
@@ -188,7 +188,7 @@ export const songsData = [
         duration: '03:58'
     },
     {
-        id: 9,
+        _id: '9',
         name: 'Song Ten',
         image: img6,
         file: song2,

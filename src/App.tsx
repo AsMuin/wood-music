@@ -30,7 +30,9 @@ function App() {
                             <Suspense fallback={<div>Loading...</div>}>
                                 <Display>
                                     <Navbar></Navbar>
-                                    <Outlet />
+                                    <div className="overflow-y-auto hide-scrollbar">
+                                        <Outlet />
+                                    </div>
                                 </Display>
                             </Suspense>
                         </div>

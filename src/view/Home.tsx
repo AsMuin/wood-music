@@ -19,7 +19,7 @@ function Home() {
                 <h1 className="my-5 text-2xl font-bold">今日推荐</h1>
                 <div className="flex snap-x scroll-pl-3 gap-3 overflow-auto hide-scrollbar" ref={songsContainer}>
                     {songsData.map(song => (
-                        <SongItem key={song.id} {...song} />
+                        <SongItem id={song._id} key={song._id} {...song} />
                     ))}
                 </div>
             </div>

@@ -59,9 +59,9 @@ function Album() {
             <hr />
             {songsData.map((song, index) => (
                 <div
-                    onClick={() => updateAudio(song.id)}
+                    onClick={() => updateAudio(song._id)}
                     className="grid cursor-pointer grid-cols-3 items-center gap-2 p-2 text-main hover:bg-[#ffffff2b] sm:grid-cols-4"
-                    key={song.id}>
+                    key={song._id}>
                     <p className="flex items-center justify-center">
                         <b className="mr-4 min-w-5">{index + 1}</b>
                         <img className="mr-5 inline w-10" src={song.image} alt="" />
