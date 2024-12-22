@@ -33,11 +33,19 @@ function Song() {
     return (
         <div className="mb-4 overflow-y-auto">
             <h1 className="mb-5 text-2xl font-bold">所有歌曲</h1>
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-                {songList.map(song => (
-                    <SongItem key={song._id} id={song._id} {...song} />
-                ))}
-            </div>
+            {error ? (
+                <div className="grid h-full place-content-center text-2xl text-red-500">加载失败</div>
+            ) : isLoading ? (
+                <div className="grid place-content-center">
+                    <span className="loading loading-dots w-32"></span>
+                </div>
+            ) : (
+                <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+                    {songList.map(song => (
+                        <SongItem key={song._id} id={song._id} {...song} />
+                    ))}
+                </div>
+            )}
         </div>
     );
 }
