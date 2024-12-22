@@ -40,7 +40,7 @@ function Song() {
                     <span className="loading loading-dots w-32"></span>
                 </div>
             ) : (
-                <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+                <div className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-4 lg:grid-cols-[repeat(auto-fill,minmax(180px,1fr))]">
                     {songList.map(song => (
                         <SongItem key={song._id} id={song._id} {...song} />
                     ))}
